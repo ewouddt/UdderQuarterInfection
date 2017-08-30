@@ -1,0 +1,5 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+readdata.R
+udderquarter.csv
+udderquarterinfection.csv
