@@ -16,7 +16,7 @@ Returns a list with the NLM result in \code{nlm} and the covariance matrix in \c
 Application of the Gamma Frailty Interval Censoring Model on the Udder Quarter Infection Data Set. For more information see Details.
 }
 \details{
-ADD MODEL DETAILS HERE
+This function fits a parametric Weibull baseline hazard frailty model with gamma distributed frailties for the udder quarter infection data taking into consideration the interval censored nature of the data. Further theoretical details can be found in the paper in the reference
 }
 \section{R Code for Model }{
 
@@ -66,8 +66,10 @@ Gamma_Frailty_Interval_Censoring()
 }
 }
 \references{
-?
+Goethals, K., Ampe, B., Berkvens, D., Laevens, H., Janssen, P. and Duchateau, L. (2009). Modeling interval-censored, clustered cow udder quarter infection times through the shared gamma frailty model. Journal of Agricultural Biological and Environmental Statistics 14, 1-14.
 }
 \author{
-?
+Klara Goethals
+
+Luc Duchateau
 }
