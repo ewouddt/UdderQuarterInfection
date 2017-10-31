@@ -22,7 +22,7 @@ This function fits a parametric Weibull baseline hazard frailty model with gamma
 
 The source R code for this model can found:
 \itemize{
-\item in the \code{doc/Models_R_Code.R} file in the package installation folder.
+\item in the \code{doc/R_Code_GammaFrailtyIntervalCensoring.R} file in the package installation folder.
 \item by accessing the function by calling \code{Gamma_Frailty_Interval_Censoring} (without brackets) or \code{getAnywhere("Gamma_Frailty_Interval_Censoring")}.
 }
 }

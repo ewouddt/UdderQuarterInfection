@@ -45,6 +45,7 @@ NULL
 #' The following example analyses of this data set are currently available in the package:
 #' \itemize{
 #' \item \code{\link{Gamma_Frailty_Interval_Censoring}}
+#' \item \code{\link{ArchimedeanCopulas}}
 #' }
 #'
 #' @format A dataframe with 4784 rows and 6 variables.
@@ -87,6 +88,72 @@ NULL
 #' # [2,] 0.000124273  0.0001982213 -0.0001015391 -0.001623066
 #' # [3,] 0.002785369 -0.0001015391  0.0017306214  0.000746460
 #' # [4,] 0.001872592 -0.0016230660  0.0007464600  0.020269244
+#'
+#'
+#'
+#'
+#' ArchimedeanCopulas()
+#' $onestageparametric
+#' $onestageparametric$estimate
+#' model0     model1     model2     model3
+#' lambda1 0.11065835 0.11093770 0.11153123 0.11149235
+#' lambda2 0.11715109 0.11761609 0.11804901 0.11798988
+#' lambda3 0.09548527 0.09489313 0.09520339 0.09526072
+#' lambda4 0.10343006 0.10027196 0.10092973 0.10099590
+#' rho1    1.32062661 1.29720088 1.29925886 1.29854377
+#' rho2    1.26976209 1.26237703 1.26433637 1.26371862
+#' rho3    1.32456636 1.30952760 1.31033903 1.31108332
+#' rho4    1.27967022 1.26625150 1.26907445 1.26965544
+#' beta    0.41840498 0.34405757 0.33992839 0.34008593
+#' theta0          NA 3.18365644 3.05036294 3.04767288
+#' theta1          NA         NA 3.55202588 3.58861334
+#' theta2          NA         NA         NA 3.51261827
+#'
+#' $onestageparametric$LLH
+#' model0    model1    model2    model3
+#' -4939.196 -3970.024 -3962.946 -3962.918
+#'
+#'
+#' $twostageparametric
+#' $twostageparametric$estimate
+#' model1     model2     model3
+#' lambda1 0.11065835 0.11065835 0.11065835
+#' lambda2 0.11715109 0.11715109 0.11715109
+#' lambda3 0.09548527 0.09548527 0.09548527
+#' lambda4 0.10343006 0.10343006 0.10343006
+#' rho1    1.32062661 1.32062661 1.32062661
+#' rho2    1.26976209 1.26976209 1.26976209
+#' rho3    1.32456636 1.32456636 1.32456636
+#' rho4    1.27967022 1.27967022 1.27967022
+#' beta    0.41840498 0.41840498 0.41840498
+#' theta0          NA 2.82505616 2.82128693
+#' theta1          NA 3.29901803 3.36289080
+#' theta2          NA         NA 3.23057648
+#'
+#' $twostageparametric$LLH
+#' model1    model2    model3
+#' NA -3965.847 -3965.733
+#'
+#'
+#' $twostagesemiparametric
+#' $twostagesemiparametric$estimate
+#' model1     model2     model3
+#' lambda1 0.11065835 0.11065835 0.11065835
+#' lambda2 0.11715109 0.11715109 0.11715109
+#' lambda3 0.09548527 0.09548527 0.09548527
+#' lambda4 0.10343006 0.10343006 0.10343006
+#' rho1    1.32062661 1.32062661 1.32062661
+#' rho2    1.26976209 1.26976209 1.26976209
+#' rho3    1.32456636 1.32456636 1.32456636
+#' rho4    1.27967022 1.27967022 1.27967022
+#' beta    0.41840498 0.41840498 0.41840498
+#' theta0  3.22655303 3.11045879 3.10717865
+#' theta1          NA 3.62590946 3.67435249
+#' theta2          NA         NA 3.57471851
+#'
+#' $twostagesemiparametric$LLH
+#' model1    model2    model3
+#' -404.3800 -396.6815 -396.6259
 #' }
 NULL
 
