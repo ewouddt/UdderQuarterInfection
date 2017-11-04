@@ -3,7 +3,8 @@
 ###########################
 
 
-data("udderquarterinfection")
+
+data("udderquarterinfection",envir=environment())
 udder <- udderquarterinfection
 
 LLH_temp <- rep(NA,4)
@@ -15,8 +16,8 @@ estimate_temp <- matrix(NA,nrow=12,ncol=4,dimnames = list(
 
 OUT <- list(
   onestageparametric=list(estimate=estimate_temp,stderror=NULL,LLH=LLH_temp),
-  twostageparametric=list(estimate=estimate_temp[,-1],stderror=NULL,LLH=LLH_temp[-1]),
-  twostagesemiparametric=list(estimate=estimate_temp[,-1],stderror=NULL,LLH=LLH_temp[-1])
+  twostageparametric=list(estimate=estimate_temp,stderror=NULL,LLH=LLH_temp),
+  twostagesemiparametric=list(estimate=estimate_temp,stderror=NULL,LLH=LLH_temp)
 )
 
 
@@ -418,7 +419,7 @@ LL1 <- -(res1$minimum)
 # WRITING OUTPUT AWAY:
 OUT$twostageparametric$estimate[,"model1"] <- OUT$onestageparametric$estimate[,"model0"]
 OUT$twostageparametric$estimate[c("theta0"),"model2"] <- exp(res2$estimate[1])
-OUT$twostageparametric$LLH["model2"] <- LL2
+OUT$twostageparametric$LLH["model1"] <- LL1
 
 
 
@@ -726,143 +727,6 @@ LL1 <- -(res1$minimum)
 OUT$twostagesemiparametric$estimate[,"model1"] <- OUT$onestageparametric$estimate[,"model0"]
 OUT$twostagesemiparametric$estimate[c("theta0"),"model1"] <- exp(res1$estimate)
 OUT$twostagesemiparametric$LLH["model1"] <- LL1
-
-
-
-# MODEL 0: no clustering      !! not possible to get derivatives of survival function !!
-# ######################
-
-termsLRTpart0 <- log((S1*S2*S3*S4)^((1-c1)*(1-c2)*(1-c3)*(1-c4))*
-                       (S2*S3*S4)^(c1*(1-c2)*(1-c3)*(1-c4))*
-                       (S1*S3*S4)^((1-c1)*c2*(1-c3)*(1-c4))*
-                       (S1*S2*S4)^((1-c1)*(1-c2)*c3*(1-c4))*
-                       (S1*S2*S3)^((1-c1)*(1-c2)*(1-c3)*c4)*
-                       (S3*S4)^(c1*c2*(1-c3)*(1-c4))*
-                       (S2*S4)^(c1*(1-c2)*c3*(1-c4))*
-                       (S2*S3)^(c1*(1-c2)*(1-c3)*c4)*
-                       (S1*S4)^((1-c1)*c2*c3*(1-c4))*
-                       (S1*S2)^((1-c1)*(1-c2)*c3*c4)*
-                       (S1*S3)^((1-c1)*c2*(1-c3)*c4)*
-                       (S4)^(c1*c2*c3*(1-c4))*
-                       (S3)^(c1*c2*(1-c3)*c4)*
-                       (S2)^(c1*(1-c2)*c3*c4)*
-                       (S1)^((1-c1)*c2*c3*c4))
-
-LRTpart0 <- sum(termsLRTpart0) #-1378.907
-
-theta <- exp(res1$estimate)
-theta1 <- theta
-theta2 <- theta
-theta3 <- theta
-
-A <- -1+(-1+S1^(-theta2)+S2^(-theta2))^(theta1/theta2)+(-1+S3^(-theta3)+S4^(-theta3))^(theta1/theta3)
-B12 <- -1+S1^(-theta2)+S2^(-theta2)
-B34 <- -1+S3^(-theta3)+S4^(-theta3)
-CC1 <- S1^(-theta2-1)
-CC2 <- S2^(-theta2-1)
-CC3 <- S3^(-theta3-1)
-CC4 <- S4^(-theta3-1)
-
-#joint survival function
-S <- A^(-1/theta1)
-
-#first order partial derivatives
-dS1 <- A^(-1/theta1-1)*B12^(theta1/theta2-1)*CC1
-dS2 <- A^(-1/theta1-1)*B12^(theta1/theta2-1)*CC2
-dS3 <- A^(-1/theta1-1)*B34^(theta1/theta3-1)*CC3
-dS4 <- A^(-1/theta1-1)*B34^(theta1/theta3-1)*CC4
-
-#second order partial derivatives
-d2S12 <- A^(-1/theta1-2)*B12^(theta1/theta2-2)*CC1*CC2*((1+theta1)*B12^(theta1/theta2)+(-theta1+theta2)*A)
-d2S13 <- (1+theta1)*A^(-1/theta1-2)*B12^(theta1/theta2-1)*B34^(theta1/theta3-1)*CC1*CC3
-d2S14 <- (1+theta1)*A^(-1/theta1-2)*B12^(theta1/theta2-1)*B34^(theta1/theta3-1)*CC1*CC4
-d2S23 <- (1+theta1)*A^(-1/theta1-2)*B12^(theta1/theta2-1)*B34^(theta1/theta3-1)*CC2*CC3
-d2S24 <- (1+theta1)*A^(-1/theta1-2)*B12^(theta1/theta2-1)*B34^(theta1/theta3-1)*CC2*CC4
-d2S34 <- A^(-1/theta1-2)*B34^(theta1/theta3-2)*CC3*CC4*((1+theta1)*B34^(theta1/theta3)+(-theta1+theta3)*A)
-
-#third order partial derivatives
-d3S123 <- (1+theta1)*A^(-1/theta1-3)*B12^(theta1/theta2-2)*B34^(theta1/theta3-1)*CC1*CC2*CC3*((1+2*theta1)*B12^(theta1/theta2)+(-theta1+theta2)*A)
-d3S124 <- (1+theta1)*A^(-1/theta1-3)*B12^(theta1/theta2-2)*B34^(theta1/theta3-1)*CC1*CC2*CC4*((1+2*theta1)*B12^(theta1/theta2)+(-theta1+theta2)*A)
-d3S134 <- (1+theta1)*A^(-1/theta1-3)*B12^(theta1/theta2-1)*B34^(theta1/theta3-2)*CC1*CC3*CC4*((1+2*theta1)*B34^(theta1/theta3)+(-theta1+theta3)*A)
-d3S234 <- (1+theta1)*A^(-1/theta1-3)*B12^(theta1/theta2-1)*B34^(theta1/theta3-2)*CC2*CC3*CC4*((1+2*theta1)*B34^(theta1/theta3)+(-theta1+theta3)*A)
-
-#fourth order partial derivatives
-d4S1234 <- (1+theta1)*A^(-1/theta1-4)*B12^(theta1/theta2-2)*B34^(theta1/theta3-2)*CC1*CC2*CC3*CC4*
-  ((1+2*theta1)*(1+3*theta1)*B12^(theta1/theta2)*B34^(theta1/theta3)+(1+2*theta1)*A*((-theta1+theta3)*B12^(theta1/theta2)+(-theta1+theta2)*B34^(theta1/theta3))+(-theta1+theta2)*(-theta1+theta3)*A^2)
-
-termsLRTpart1 <- log(S^((1-c1)*(1-c2)*(1-c3)*(1-c4))*
-                       (dS1)^(c1*(1-c2)*(1-c3)*(1-c4))*
-                       (dS2)^((1-c1)*c2*(1-c3)*(1-c4))*
-                       (dS3)^((1-c1)*(1-c2)*c3*(1-c4))*
-                       (dS4)^((1-c1)*(1-c2)*(1-c3)*c4)*
-                       d2S12^(c1*c2*(1-c3)*(1-c4))*
-                       d2S13^(c1*(1-c2)*c3*(1-c4))*
-                       d2S14^(c1*(1-c2)*(1-c3)*c4)*
-                       d2S23^((1-c1)*c2*c3*(1-c4))*
-                       d2S24^((1-c1)*c2*(1-c3)*c4)*
-                       d2S34^((1-c1)*(1-c2)*c3*c4)*
-                       (d3S123)^(c1*c2*c3*(1-c4))*
-                       (d3S124)^(c1*c2*(1-c3)*c4)*
-                       (d3S134)^(c1*(1-c2)*c3*c4)*
-                       (d3S234)^((1-c1)*c2*c3*c4)*
-                       d4S1234^(c1*c2*c3*c4))
-LRTpart1 <- sum(termsLRTpart1) #-404.38
-
-#shorter formulae
-theta <- exp(res1$estimate)
-
-A <- +S1^(-theta)+S2^(-theta)+S3^(-theta)+S4^(-theta)-3
-CC1 <- S1^(-theta-1)
-CC2 <- S2^(-theta-1)
-CC3 <- S3^(-theta-1)
-CC4 <- S4^(-theta-1)
-
-#joint survival function
-S <- A^(-1/theta)
-
-#first order partial derivatives
-ddS1 <- A^(-1/theta-1)*CC1
-ddS2 <- A^(-1/theta-1)*CC2
-ddS3 <- A^(-1/theta-1)*CC3
-ddS4 <- A^(-1/theta-1)*CC4
-
-#second order partial derivatives
-dd2S12 <- (1+theta)*A^(-1/theta-2)*CC1*CC2
-dd2S13 <- (1+theta)*A^(-1/theta-2)*CC1*CC3
-dd2S14 <- (1+theta)*A^(-1/theta-2)*CC1*CC4
-dd2S23 <- (1+theta)*A^(-1/theta-2)*CC2*CC3
-dd2S24 <- (1+theta)*A^(-1/theta-2)*CC2*CC4
-dd2S34 <- (1+theta)*A^(-1/theta-2)*CC3*CC4
-
-#third order partial derivatives
-dd3S123 <- (1+theta)*(1+2*theta)*A^(-1/theta-3)*CC1*CC2*CC3
-dd3S124 <- (1+theta)*(1+2*theta)*A^(-1/theta-3)*CC1*CC2*CC4
-dd3S134 <- (1+theta)*(1+2*theta)*A^(-1/theta-3)*CC1*CC3*CC4
-dd3S234 <- (1+theta)*(1+2*theta)*A^(-1/theta-3)*CC2*CC3*CC4
-
-#fourth order partial derivatives
-dd4S1234 <- (1+theta)*(1+2*theta)*(1+3*theta)*A^(-1/theta-4)*CC1*CC2*CC3*CC4
-
-
-termsLLRTpart1 <- log(S^((1-c1)*(1-c2)*(1-c3)*(1-c4))*
-                        (ddS1)^(c1*(1-c2)*(1-c3)*(1-c4))*
-                        (ddS2)^((1-c1)*c2*(1-c3)*(1-c4))*
-                        (ddS3)^((1-c1)*(1-c2)*c3*(1-c4))*
-                        (ddS4)^((1-c1)*(1-c2)*(1-c3)*c4)*
-                        dd2S12^(c1*c2*(1-c3)*(1-c4))*
-                        dd2S13^(c1*(1-c2)*c3*(1-c4))*
-                        dd2S14^(c1*(1-c2)*(1-c3)*c4)*
-                        dd2S23^((1-c1)*c2*c3*(1-c4))*
-                        dd2S24^((1-c1)*c2*(1-c3)*c4)*
-                        dd2S34^((1-c1)*(1-c2)*c3*c4)*
-                        (dd3S123)^(c1*c2*c3*(1-c4))*
-                        (dd3S124)^(c1*c2*(1-c3)*c4)*
-                        (dd3S134)^(c1*(1-c2)*c3*c4)*
-                        (dd3S234)^((1-c1)*c2*c3*c4)*
-                        dd4S1234^(c1*c2*c3*c4))
-LLRTpart1 <- sum(termsLLRTpart1)
-
-LRT1 <- 2*(LRTpart1-LRTpart0)
 
 
 #=====================================#
@@ -1196,6 +1060,11 @@ OUT$onestageparametric$estimate[,"model1"] <- c(exp(res1$estimate[c(1,3,5,7,2,4,
 OUT$onestageparametric$LLH["model1"] <- LL1
 
 
+# Add Model 0 to Semi-parametric and parametric model
+OUT$twostageparametric$estimate[,"model0"] <- OUT$onestageparametric$estimate[,"model0"]
+OUT$twostageparametric$LLH["model0"] <- OUT$onestageparametric$LLH["model0"]
+OUT$twostagesemiparametric$estimate[,"model0"] <- OUT$onestageparametric$estimate[,"model0"]
+OUT$twostagesemiparametric$LLH["model0"] <- OUT$onestageparametric$LLH["model0"]
 
 # Temporarily Remove stderror
 OUT <- lapply(OUT,FUN=function(x){x[-2]})

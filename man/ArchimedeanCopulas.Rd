@@ -23,7 +23,20 @@ These 3 list elements all contain the following items:
 Modelling association through Archimedean Copulas on the Udder Quarter Infection Data Set. For more information see Details.
 }
 \details{
-TO ADD: What is model0, model1, model2, model3 and what is 1stage, 2stageparam, 2stagesemiparam
+This function fits Archimedean survival copula models with different association structures for the udder quarter infection data.
+The baseline hazard  function is assumed to be either Weibull (parametric) or left unspecified (semiparametric).
+Both the parametric and semiparametric copula model can be fitted using a two-stage approach.
+The two stage approach starts by estimating the marginal survival function parameters (first phase), next plugging those in the likelihood expressions as constants and maximising the likelihood for the remaining association parameters (second stage).
+The one-stage approach is only available for the parametric model.
+In the one-stage approach, the likelihood is maximised simultaneously for all parameters (i.e., both parameters related to the marginal survival functions and the association parameters).
+Different association structures can be fitted, using the Clayton copula.
+\itemize{
+\item Model0 assumes independence between the four udder quarters.
+\item Model1 assumes the same association between any two udder quarters.
+\item Model2 assumes the same association between the two rear udder quarters as between the two front quarters, but a different association between any front and rear udder quarter.
+\item Model3 assumes a different association  between the two rear udder quarters, between the two front quarters and between any front and rear udder quarter.
+}
+Further theoretical details can be found in the paper in the reference.
 }
 \section{R Code for Model }{
 
@@ -63,49 +76,53 @@ model0    model1    model2    model3
 
 $twostageparametric
 $twostageparametric$estimate
-model1     model2     model3
-lambda1 0.11065835 0.11065835 0.11065835
-lambda2 0.11715109 0.11715109 0.11715109
-lambda3 0.09548527 0.09548527 0.09548527
-lambda4 0.10343006 0.10343006 0.10343006
-rho1    1.32062661 1.32062661 1.32062661
-rho2    1.26976209 1.26976209 1.26976209
-rho3    1.32456636 1.32456636 1.32456636
-rho4    1.27967022 1.27967022 1.27967022
-beta    0.41840498 0.41840498 0.41840498
-theta0          NA 2.82505616 2.82128693
-theta1          NA 3.29901803 3.36289080
-theta2          NA         NA 3.23057648
+model0     model1     model2     model3
+lambda1 0.11065835 0.11065835 0.11065835 0.11065835
+lambda2 0.11715109 0.11715109 0.11715109 0.11715109
+lambda3 0.09548527 0.09548527 0.09548527 0.09548527
+lambda4 0.10343006 0.10343006 0.10343006 0.10343006
+rho1    1.32062661 1.32062661 1.32062661 1.32062661
+rho2    1.26976209 1.26976209 1.26976209 1.26976209
+rho3    1.32456636 1.32456636 1.32456636 1.32456636
+rho4    1.27967022 1.27967022 1.27967022 1.27967022
+beta    0.41840498 0.41840498 0.41840498 0.41840498
+theta0          NA         NA 2.82505616 2.82128693
+theta1          NA         NA 3.29901803 3.36289080
+theta2          NA         NA         NA 3.23057648
 
 $twostageparametric$LLH
-model1    model2    model3
-NA -3965.847 -3965.733
+model0    model1    model2    model3
+-4939.196 -3973.198 -3965.847 -3965.733
 
 
 $twostagesemiparametric
 $twostagesemiparametric$estimate
-model1     model2     model3
-lambda1 0.11065835 0.11065835 0.11065835
-lambda2 0.11715109 0.11715109 0.11715109
-lambda3 0.09548527 0.09548527 0.09548527
-lambda4 0.10343006 0.10343006 0.10343006
-rho1    1.32062661 1.32062661 1.32062661
-rho2    1.26976209 1.26976209 1.26976209
-rho3    1.32456636 1.32456636 1.32456636
-rho4    1.27967022 1.27967022 1.27967022
-beta    0.41840498 0.41840498 0.41840498
-theta0  3.22655303 3.11045879 3.10717865
-theta1          NA 3.62590946 3.67435249
-theta2          NA         NA 3.57471851
+model0     model1     model2     model3
+lambda1 0.11065835 0.11065835 0.11065835 0.11065835
+lambda2 0.11715109 0.11715109 0.11715109 0.11715109
+lambda3 0.09548527 0.09548527 0.09548527 0.09548527
+lambda4 0.10343006 0.10343006 0.10343006 0.10343006
+rho1    1.32062661 1.32062661 1.32062661 1.32062661
+rho2    1.26976209 1.26976209 1.26976209 1.26976209
+rho3    1.32456636 1.32456636 1.32456636 1.32456636
+rho4    1.27967022 1.27967022 1.27967022 1.27967022
+beta    0.41840498 0.41840498 0.41840498 0.41840498
+theta0          NA 3.22655303 3.11045879 3.10717865
+theta1          NA         NA 3.62590946 3.67435249
+theta2          NA         NA         NA 3.57471851
 
 $twostagesemiparametric$LLH
-model1    model2    model3
--404.3800 -396.6815 -396.6259
+model0     model1     model2     model3
+-4939.1962  -404.3800  -396.6815  -396.6259
 }
 }
 \references{
-to add
+Prenen, L., Duchateau, L. and Braeckers R. (2017).  Investigating the correlation structure of quadrivariate udder infection times through hierarchical Archimedean copulas. Lifetime Data Analysis. In Press.
 }
 \author{
-to add
+Leen Prenen
+
+Roel Braeckers
+
+Luc Duchateau
 }

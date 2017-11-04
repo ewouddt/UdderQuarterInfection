@@ -7,11 +7,26 @@ NULL
 #'@export
 #'@title Archimedean Copulas
 #'@description Modelling association through Archimedean Copulas on the Udder Quarter Infection Data Set. For more information see Details.
-#'@details TO ADD: What is model0, model1, model2, model3 and what is 1stage, 2stageparam, 2stagesemiparam
+#'@details
+#' This function fits Archimedean survival copula models with different association structures for the udder quarter infection data.
+#' The baseline hazard  function is assumed to be either Weibull (parametric) or left unspecified (semiparametric).
+#' Both the parametric and semiparametric copula model can be fitted using a two-stage approach.
+#' The two stage approach starts by estimating the marginal survival function parameters (first phase), next plugging those in the likelihood expressions as constants and maximising the likelihood for the remaining association parameters (second stage).
+#' The one-stage approach is only available for the parametric model.
+#' In the one-stage approach, the likelihood is maximised simultaneously for all parameters (i.e., both parameters related to the marginal survival functions and the association parameters).
+#' Different association structures can be fitted, using the Clayton copula.
+#' \itemize{
+#' \item Model0 assumes independence between the four udder quarters.
+#' \item Model1 assumes the same association between any two udder quarters.
+#' \item Model2 assumes the same association between the two rear udder quarters as between the two front quarters, but a different association between any front and rear udder quarter.
+#' \item Model3 assumes a different association  between the two rear udder quarters, between the two front quarters and between any front and rear udder quarter.
+#' }
+#' Further theoretical details can be found in the paper in the reference.
 #'
-#'
-#'@author to add
-#'@references to add
+#' @author Leen Prenen
+#' @author Roel Braeckers
+#' @author Luc Duchateau
+#' @references Prenen, L., Duchateau, L. and Braeckers R. (2017).  Investigating the correlation structure of quadrivariate udder infection times through hierarchical Archimedean copulas. Lifetime Data Analysis. In Press.
 #'
 #'
 #'@return Returns a list object with elements:
@@ -62,44 +77,44 @@ NULL
 #'
 #' $twostageparametric
 #' $twostageparametric$estimate
-#' model1     model2     model3
-#' lambda1 0.11065835 0.11065835 0.11065835
-#' lambda2 0.11715109 0.11715109 0.11715109
-#' lambda3 0.09548527 0.09548527 0.09548527
-#' lambda4 0.10343006 0.10343006 0.10343006
-#' rho1    1.32062661 1.32062661 1.32062661
-#' rho2    1.26976209 1.26976209 1.26976209
-#' rho3    1.32456636 1.32456636 1.32456636
-#' rho4    1.27967022 1.27967022 1.27967022
-#' beta    0.41840498 0.41840498 0.41840498
-#' theta0          NA 2.82505616 2.82128693
-#' theta1          NA 3.29901803 3.36289080
-#' theta2          NA         NA 3.23057648
+#' model0     model1     model2     model3
+#' lambda1 0.11065835 0.11065835 0.11065835 0.11065835
+#' lambda2 0.11715109 0.11715109 0.11715109 0.11715109
+#' lambda3 0.09548527 0.09548527 0.09548527 0.09548527
+#' lambda4 0.10343006 0.10343006 0.10343006 0.10343006
+#' rho1    1.32062661 1.32062661 1.32062661 1.32062661
+#' rho2    1.26976209 1.26976209 1.26976209 1.26976209
+#' rho3    1.32456636 1.32456636 1.32456636 1.32456636
+#' rho4    1.27967022 1.27967022 1.27967022 1.27967022
+#' beta    0.41840498 0.41840498 0.41840498 0.41840498
+#' theta0          NA         NA 2.82505616 2.82128693
+#' theta1          NA         NA 3.29901803 3.36289080
+#' theta2          NA         NA         NA 3.23057648
 #'
 #' $twostageparametric$LLH
-#' model1    model2    model3
-#' NA -3965.847 -3965.733
+#' model0    model1    model2    model3
+#' -4939.196 -3973.198 -3965.847 -3965.733
 #'
 #'
 #' $twostagesemiparametric
 #' $twostagesemiparametric$estimate
-#' model1     model2     model3
-#' lambda1 0.11065835 0.11065835 0.11065835
-#' lambda2 0.11715109 0.11715109 0.11715109
-#' lambda3 0.09548527 0.09548527 0.09548527
-#' lambda4 0.10343006 0.10343006 0.10343006
-#' rho1    1.32062661 1.32062661 1.32062661
-#' rho2    1.26976209 1.26976209 1.26976209
-#' rho3    1.32456636 1.32456636 1.32456636
-#' rho4    1.27967022 1.27967022 1.27967022
-#' beta    0.41840498 0.41840498 0.41840498
-#' theta0  3.22655303 3.11045879 3.10717865
-#' theta1          NA 3.62590946 3.67435249
-#' theta2          NA         NA 3.57471851
+#' model0     model1     model2     model3
+#' lambda1 0.11065835 0.11065835 0.11065835 0.11065835
+#' lambda2 0.11715109 0.11715109 0.11715109 0.11715109
+#' lambda3 0.09548527 0.09548527 0.09548527 0.09548527
+#' lambda4 0.10343006 0.10343006 0.10343006 0.10343006
+#' rho1    1.32062661 1.32062661 1.32062661 1.32062661
+#' rho2    1.26976209 1.26976209 1.26976209 1.26976209
+#' rho3    1.32456636 1.32456636 1.32456636 1.32456636
+#' rho4    1.27967022 1.27967022 1.27967022 1.27967022
+#' beta    0.41840498 0.41840498 0.41840498 0.41840498
+#' theta0          NA 3.22655303 3.11045879 3.10717865
+#' theta1          NA         NA 3.62590946 3.67435249
+#' theta2          NA         NA         NA 3.57471851
 #'
 #' $twostagesemiparametric$LLH
-#' model1    model2    model3
-#' -404.3800 -396.6815 -396.6259
+#' model0     model1     model2     model3
+#' -4939.1962  -404.3800  -396.6815  -396.6259
 #' }
 ArchimedeanCopulas <- function(){
 
@@ -124,8 +139,8 @@ estimate_temp <- matrix(NA,nrow=12,ncol=4,dimnames = list(
 
 OUT <- list(
   onestageparametric=list(estimate=estimate_temp,stderror=NULL,LLH=LLH_temp),
-  twostageparametric=list(estimate=estimate_temp[,-1],stderror=NULL,LLH=LLH_temp[-1]),
-  twostagesemiparametric=list(estimate=estimate_temp[,-1],stderror=NULL,LLH=LLH_temp[-1])
+  twostageparametric=list(estimate=estimate_temp,stderror=NULL,LLH=LLH_temp),
+  twostagesemiparametric=list(estimate=estimate_temp,stderror=NULL,LLH=LLH_temp)
 )
 
 
@@ -527,7 +542,7 @@ LL1 <- -(res1$minimum)
 # WRITING OUTPUT AWAY:
 OUT$twostageparametric$estimate[,"model1"] <- OUT$onestageparametric$estimate[,"model0"]
 OUT$twostageparametric$estimate[c("theta0"),"model2"] <- exp(res2$estimate[1])
-OUT$twostageparametric$LLH["model2"] <- LL2
+OUT$twostageparametric$LLH["model1"] <- LL1
 
 
 
@@ -836,146 +851,6 @@ OUT$twostagesemiparametric$estimate[,"model1"] <- OUT$onestageparametric$estimat
 OUT$twostagesemiparametric$estimate[c("theta0"),"model1"] <- exp(res1$estimate)
 OUT$twostagesemiparametric$LLH["model1"] <- LL1
 
-
-### CAN THIS BE REMOVED:
-
-# MODEL 0: no clustering      !! not possible to get derivatives of survival function !!
-# ######################
-
-termsLRTpart0 <- log((S1*S2*S3*S4)^((1-c1)*(1-c2)*(1-c3)*(1-c4))*
-				(S2*S3*S4)^(c1*(1-c2)*(1-c3)*(1-c4))*
-				(S1*S3*S4)^((1-c1)*c2*(1-c3)*(1-c4))*
-				(S1*S2*S4)^((1-c1)*(1-c2)*c3*(1-c4))*
-				(S1*S2*S3)^((1-c1)*(1-c2)*(1-c3)*c4)*
-				(S3*S4)^(c1*c2*(1-c3)*(1-c4))*
-				(S2*S4)^(c1*(1-c2)*c3*(1-c4))*
-				(S2*S3)^(c1*(1-c2)*(1-c3)*c4)*
-				(S1*S4)^((1-c1)*c2*c3*(1-c4))*
-				(S1*S2)^((1-c1)*(1-c2)*c3*c4)*
-				(S1*S3)^((1-c1)*c2*(1-c3)*c4)*
-				(S4)^(c1*c2*c3*(1-c4))*
-				(S3)^(c1*c2*(1-c3)*c4)*
-				(S2)^(c1*(1-c2)*c3*c4)*
-				(S1)^((1-c1)*c2*c3*c4))
-
-LRTpart0 <- sum(termsLRTpart0) #-1378.907
-
-theta <- exp(res1$estimate)
-theta1 <- theta
-theta2 <- theta
-theta3 <- theta
-
-A <- -1+(-1+S1^(-theta2)+S2^(-theta2))^(theta1/theta2)+(-1+S3^(-theta3)+S4^(-theta3))^(theta1/theta3)
-B12 <- -1+S1^(-theta2)+S2^(-theta2)
-B34 <- -1+S3^(-theta3)+S4^(-theta3)
-CC1 <- S1^(-theta2-1)
-CC2 <- S2^(-theta2-1)
-CC3 <- S3^(-theta3-1)
-CC4 <- S4^(-theta3-1)
-
-#joint survival function
-S <- A^(-1/theta1)
-
-#first order partial derivatives
-dS1 <- A^(-1/theta1-1)*B12^(theta1/theta2-1)*CC1
-dS2 <- A^(-1/theta1-1)*B12^(theta1/theta2-1)*CC2
-dS3 <- A^(-1/theta1-1)*B34^(theta1/theta3-1)*CC3
-dS4 <- A^(-1/theta1-1)*B34^(theta1/theta3-1)*CC4
-
-#second order partial derivatives
-d2S12 <- A^(-1/theta1-2)*B12^(theta1/theta2-2)*CC1*CC2*((1+theta1)*B12^(theta1/theta2)+(-theta1+theta2)*A)
-d2S13 <- (1+theta1)*A^(-1/theta1-2)*B12^(theta1/theta2-1)*B34^(theta1/theta3-1)*CC1*CC3
-d2S14 <- (1+theta1)*A^(-1/theta1-2)*B12^(theta1/theta2-1)*B34^(theta1/theta3-1)*CC1*CC4
-d2S23 <- (1+theta1)*A^(-1/theta1-2)*B12^(theta1/theta2-1)*B34^(theta1/theta3-1)*CC2*CC3
-d2S24 <- (1+theta1)*A^(-1/theta1-2)*B12^(theta1/theta2-1)*B34^(theta1/theta3-1)*CC2*CC4
-d2S34 <- A^(-1/theta1-2)*B34^(theta1/theta3-2)*CC3*CC4*((1+theta1)*B34^(theta1/theta3)+(-theta1+theta3)*A)
-
-#third order partial derivatives
-d3S123 <- (1+theta1)*A^(-1/theta1-3)*B12^(theta1/theta2-2)*B34^(theta1/theta3-1)*CC1*CC2*CC3*((1+2*theta1)*B12^(theta1/theta2)+(-theta1+theta2)*A)
-d3S124 <- (1+theta1)*A^(-1/theta1-3)*B12^(theta1/theta2-2)*B34^(theta1/theta3-1)*CC1*CC2*CC4*((1+2*theta1)*B12^(theta1/theta2)+(-theta1+theta2)*A)
-d3S134 <- (1+theta1)*A^(-1/theta1-3)*B12^(theta1/theta2-1)*B34^(theta1/theta3-2)*CC1*CC3*CC4*((1+2*theta1)*B34^(theta1/theta3)+(-theta1+theta3)*A)
-d3S234 <- (1+theta1)*A^(-1/theta1-3)*B12^(theta1/theta2-1)*B34^(theta1/theta3-2)*CC2*CC3*CC4*((1+2*theta1)*B34^(theta1/theta3)+(-theta1+theta3)*A)
-
-#fourth order partial derivatives
-d4S1234 <- (1+theta1)*A^(-1/theta1-4)*B12^(theta1/theta2-2)*B34^(theta1/theta3-2)*CC1*CC2*CC3*CC4*
-		((1+2*theta1)*(1+3*theta1)*B12^(theta1/theta2)*B34^(theta1/theta3)+(1+2*theta1)*A*((-theta1+theta3)*B12^(theta1/theta2)+(-theta1+theta2)*B34^(theta1/theta3))+(-theta1+theta2)*(-theta1+theta3)*A^2)
-
-termsLRTpart1 <- log(S^((1-c1)*(1-c2)*(1-c3)*(1-c4))*
-				(dS1)^(c1*(1-c2)*(1-c3)*(1-c4))*
-				(dS2)^((1-c1)*c2*(1-c3)*(1-c4))*
-				(dS3)^((1-c1)*(1-c2)*c3*(1-c4))*
-				(dS4)^((1-c1)*(1-c2)*(1-c3)*c4)*
-				d2S12^(c1*c2*(1-c3)*(1-c4))*
-				d2S13^(c1*(1-c2)*c3*(1-c4))*
-				d2S14^(c1*(1-c2)*(1-c3)*c4)*
-				d2S23^((1-c1)*c2*c3*(1-c4))*
-				d2S24^((1-c1)*c2*(1-c3)*c4)*
-				d2S34^((1-c1)*(1-c2)*c3*c4)*
-				(d3S123)^(c1*c2*c3*(1-c4))*
-				(d3S124)^(c1*c2*(1-c3)*c4)*
-				(d3S134)^(c1*(1-c2)*c3*c4)*
-				(d3S234)^((1-c1)*c2*c3*c4)*
-				d4S1234^(c1*c2*c3*c4))
-LRTpart1 <- sum(termsLRTpart1) #-404.38
-
-#shorter formulae
-theta <- exp(res1$estimate)
-
-A <- +S1^(-theta)+S2^(-theta)+S3^(-theta)+S4^(-theta)-3
-CC1 <- S1^(-theta-1)
-CC2 <- S2^(-theta-1)
-CC3 <- S3^(-theta-1)
-CC4 <- S4^(-theta-1)
-
-#joint survival function
-S <- A^(-1/theta)
-
-#first order partial derivatives
-ddS1 <- A^(-1/theta-1)*CC1
-ddS2 <- A^(-1/theta-1)*CC2
-ddS3 <- A^(-1/theta-1)*CC3
-ddS4 <- A^(-1/theta-1)*CC4
-
-#second order partial derivatives
-dd2S12 <- (1+theta)*A^(-1/theta-2)*CC1*CC2
-dd2S13 <- (1+theta)*A^(-1/theta-2)*CC1*CC3
-dd2S14 <- (1+theta)*A^(-1/theta-2)*CC1*CC4
-dd2S23 <- (1+theta)*A^(-1/theta-2)*CC2*CC3
-dd2S24 <- (1+theta)*A^(-1/theta-2)*CC2*CC4
-dd2S34 <- (1+theta)*A^(-1/theta-2)*CC3*CC4
-
-#third order partial derivatives
-dd3S123 <- (1+theta)*(1+2*theta)*A^(-1/theta-3)*CC1*CC2*CC3
-dd3S124 <- (1+theta)*(1+2*theta)*A^(-1/theta-3)*CC1*CC2*CC4
-dd3S134 <- (1+theta)*(1+2*theta)*A^(-1/theta-3)*CC1*CC3*CC4
-dd3S234 <- (1+theta)*(1+2*theta)*A^(-1/theta-3)*CC2*CC3*CC4
-
-#fourth order partial derivatives
-dd4S1234 <- (1+theta)*(1+2*theta)*(1+3*theta)*A^(-1/theta-4)*CC1*CC2*CC3*CC4
-
-
-termsLLRTpart1 <- log(S^((1-c1)*(1-c2)*(1-c3)*(1-c4))*
-				(ddS1)^(c1*(1-c2)*(1-c3)*(1-c4))*
-				(ddS2)^((1-c1)*c2*(1-c3)*(1-c4))*
-				(ddS3)^((1-c1)*(1-c2)*c3*(1-c4))*
-				(ddS4)^((1-c1)*(1-c2)*(1-c3)*c4)*
-				dd2S12^(c1*c2*(1-c3)*(1-c4))*
-				dd2S13^(c1*(1-c2)*c3*(1-c4))*
-				dd2S14^(c1*(1-c2)*(1-c3)*c4)*
-				dd2S23^((1-c1)*c2*c3*(1-c4))*
-				dd2S24^((1-c1)*c2*(1-c3)*c4)*
-				dd2S34^((1-c1)*(1-c2)*c3*c4)*
-				(dd3S123)^(c1*c2*c3*(1-c4))*
-				(dd3S124)^(c1*c2*(1-c3)*c4)*
-				(dd3S134)^(c1*(1-c2)*c3*c4)*
-				(dd3S234)^((1-c1)*c2*c3*c4)*
-				dd4S1234^(c1*c2*c3*c4))
-LLRTpart1 <- sum(termsLLRTpart1)
-
-LRT1 <- 2*(LRTpart1-LRTpart0)
-
-
-## UNTIL HERE?
 
 #=====================================#
 # One-stage parametric estimation #
@@ -1308,6 +1183,11 @@ OUT$onestageparametric$estimate[,"model1"] <- c(exp(res1$estimate[c(1,3,5,7,2,4,
 OUT$onestageparametric$LLH["model1"] <- LL1
 
 
+# Add Model 0 to Semi-parametric and parametric model
+OUT$twostageparametric$estimate[,"model0"] <- OUT$onestageparametric$estimate[,"model0"]
+OUT$twostageparametric$LLH["model0"] <- OUT$onestageparametric$LLH["model0"]
+OUT$twostagesemiparametric$estimate[,"model0"] <- OUT$onestageparametric$estimate[,"model0"]
+OUT$twostagesemiparametric$LLH["model0"] <- OUT$onestageparametric$LLH["model0"]
 
 # Temporarily Remove stderror
 OUT <- lapply(OUT,FUN=function(x){x[-2]})
